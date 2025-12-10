@@ -3,6 +3,7 @@ import os.path
 from datetime import datetime, timedelta
 
 from google.oauth2.credentials import Credentials
+from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 
@@ -77,7 +78,7 @@ def test_youtube_analytics_api(creds):
         ids="channel==MINE",
         startDate=start_date.isoformat(),
         endDate=end_date.isoformat(),
-        metrics="views,watchTimeHours,averageViewDuration",
+        metrics="views,estimatedMinutesWatched,averageViewDuration",
         dimensions="day",
         sort="day",
     ).execute()

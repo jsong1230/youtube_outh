@@ -7,6 +7,8 @@ YouTube Data API와 YouTube Analytics API를 사용하여 채널 정보와 분�
 - YouTube OAuth2 인증 (자동 토큰 갱신 지원)
 - 채널 통계 조회 (구독자 수, 총 조회수, 영상 개수)
 - 지난 7일간 일별 분석 데이터 조회 (조회수, 시청 시간, 평균 시청 시간)
+- 특정 채널 핸들로부터 채널 정보 조회
+- API 동작 여부 확인 테스트 코드 제공
 
 ## 사전 요구사항
 
@@ -30,14 +32,31 @@ pip install -r requirements.txt
 
 ## 사용 방법
 
+### 1. 초기 인증 (첫 실행 시)
+
 ```bash
 python yt_auth.py
 ```
 
-첫 실행 시:
 - 브라우저가 자동으로 열리며 Google 계정 로그인 요청
 - YouTube 데이터 접근 권한 승인
 - 인증 완료 후 `token.json` 파일이 생성되어 이후 자동 인증
+
+### 2. API 동작 여부 확인 테스트
+
+```bash
+python test_api.py
+```
+
+`token.json` 파일을 사용하여 YouTube Data API와 Analytics API의 정상 동작 여부를 확인합니다.
+
+**주요 기능:**
+- 채널 핸들(`@Daepa_ai`)로부터 채널 ID 자동 조회
+- 특정 채널의 통계 및 분석 데이터 조회
+- API 오류 처리 및 상세한 결과 출력
+
+**채널 변경:**
+`test_api.py` 파일의 `CHANNEL_HANDLE` 변수를 수정하여 다른 채널을 조회할 수 있습니다.
 
 ## 주요 기능 설명
 
@@ -51,7 +70,8 @@ python yt_auth.py
 
 ```
 youtube_outh/
-├── yt_auth.py           # 메인 스크립트
+├── yt_auth.py           # 메인 스크립트 (OAuth 인증 및 기본 테스트)
+├── test_api.py          # API 동작 여부 확인 테스트 코드
 ├── client_secret.json   # OAuth 클라이언트 정보 (Google Cloud Console에서 다운로드)
 ├── token.json          # 인증 토큰 (자동 생성)
 ├── requirements.txt    # Python 패키지 의존성
@@ -63,6 +83,8 @@ youtube_outh/
 - `client_secret.json` 파일은 절대 공개 저장소에 업로드하지 마세요
 - `token.json` 파일도 개인 정보이므로 보안에 주의하세요
 - 수익 정보까지 조회하려면 `yt_auth.py`의 주석 처리된 스코프를 활성화하세요
+- `test_api.py`는 특정 채널(`@Daepa_ai`)을 조회하도록 설정되어 있습니다. 다른 채널을 조회하려면 `CHANNEL_HANDLE` 변수를 수정하세요
+- Viewer 권한이 있는 계정으로 인증한 경우, 특정 채널 ID를 지정하여 해당 채널의 데이터를 조회할 수 있습니다
 
 ## 참고 자료
 
