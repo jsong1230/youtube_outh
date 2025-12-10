@@ -291,6 +291,7 @@ def main():
     
     # API 테스트 실행
     channel_id = test_youtube_data_api(creds)
+    data_api_result = channel_id is not None
     if channel_id:
         print(f"\n📌 조회할 채널 ID: {channel_id}")
     analytics_api_result = test_youtube_analytics_api(creds, channel_id)
@@ -302,7 +303,7 @@ def main():
     print(f"YouTube Data API:      {'✅ 정상' if data_api_result else '❌ 실패'}")
     print(f"YouTube Analytics API: {'✅ 정상' if analytics_api_result else '❌ 실패'}")
     
-    if channel_id and analytics_api_result:
+    if data_api_result and analytics_api_result:
         print("\n🎉 모든 API가 정상적으로 동작합니다!")
         return 0
     else:
